@@ -60,9 +60,9 @@ $(document).ready(function() {
             quizContainer.hide();
             $('#gameOver').html("Awesome!! Game Over!!");
             finalImage.show();
-            ans.show().html("No of Correct Answers: " + numOfCorrect);
-            wrg.show().html("No of Wrong Answers: " + numOfWrong);
-            unAns.show().html("No of UnAnswered: " + numOfUnanswered);
+            ans.show().html("No. of Correct Answers: " + numOfCorrect);
+            wrg.show().html("No. of Wrong Answers: " + numOfWrong);
+            unAns.show().html("No. of UnAnswered: " + numOfUnanswered);
             restart.show();
         }
         $('#quiz').html(myQuestions[i].question);
