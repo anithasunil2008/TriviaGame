@@ -100,6 +100,7 @@ $(document).ready(function() {
             runAnsTimer(i);
         });
 
+        //function to decrement the timer
         function decrementTimer() {
             remainingTime--;
             timerDiv.show().html("Your Timer - 00: " + remainingTime);
@@ -114,13 +115,14 @@ $(document).ready(function() {
             }
         }
 
+        //function to set the interval for each sec
         function startTimer() {
             timer = setInterval(decrementTimer, 1000);
             remainingTime = 31;
         }
     }
 
-
+    //function to stop timer and clear the div
     function stopTimer() {
         clearInterval(timer);
         quizContainer.empty();
@@ -129,6 +131,7 @@ $(document).ready(function() {
         timerDiv.hide();
     }
 
+    //function that helps to increment the index number to ask the next question
     function runAnsTimer(index) {
         if (index < myQuestions.length) {
             index++;
