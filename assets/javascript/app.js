@@ -18,10 +18,6 @@ $(document).ready(function() {
     var numOfCorrect = 0;
     var numOfWrong = 0;
     var numOfUnanswered = 0;
-    var answer;
-    var image;
-    var i;
-
 
     //JSON data about questions and answers
     var myQuestions = [{
@@ -69,9 +65,7 @@ $(document).ready(function() {
             unAns.show().html("No of UnAnswered: " + numOfUnanswered);
             restart.show();
         }
-        console.log("Question index : " + i);
         $('#quiz').html(myQuestions[i].question);
-        console.log(myQuestions[i].question);
 
         for (var j = 0; j < myQuestions[i].answer.length; j++) {
             inputType.className = ('select');
@@ -80,12 +74,10 @@ $(document).ready(function() {
             inputType.value = myQuestions[i].answer[j];
             options.appendChild(inputType);
             options.innerHTML += myQuestions[i].answer[j] + "<br>";
-            console.log(myQuestions[i].answer[j]);
         }
         startTimer();
         answer = myQuestions[i].correctAnswer;
         image = myQuestions[i].image;
-        console.log(answer);
 
         $('.select').on("click", function() {
             if (setCheck != this) {
@@ -108,28 +100,26 @@ $(document).ready(function() {
             runAnsTimer(i);
         });
 
-    }
+        function decrementTimer() {
+            remainingTime--;
+            timerDiv.show().html("Your Timer - 00: " + remainingTime);
+            if (remainingTime === 0) {
+                stopTimer();
+                showImage.html("<img src=" + myQuestions[i].image + " width='250px' height='250px'>");
+                $('#printTime').text("Time Remaining: " + remainingTime + " Seconds");
+                resultsContainer.text("Oops!! Sorry, time out.");
+                $('#printAnswer').text("The Correct Answer was: " + myQuestions[i].correctAnswer);
+                numOfUnanswered++;
+                runAnsTimer(i);
+            }
+        }
 
-    function decrementTimer() {
-        remainingTime--;
-        timerDiv.show().html("Your Timer - 00: " + remainingTime);
-        if (remainingTime === 0) {
-            stopTimer();
-            showImage.html("<img src=" + image + " width='250px' height='250px'>");
-            $('#printTime').text("Time Remaining: " + remainingTime + " Seconds");
-            resultsContainer.text("Oops!! Sorry, time out.");
-            $('#printAnswer').text("The Correct Answer was: " + answer);
-            numOfUnanswered++;
-            runAnsTimer(i);
-
+        function startTimer() {
+            timer = setInterval(decrementTimer, 1000);
+            remainingTime = 31;
         }
     }
 
-    function startTimer() {
-        timer = setInterval(decrementTimer, 1000);
-        remainingTime = 61;
-
-    }
 
     function stopTimer() {
         clearInterval(timer);
@@ -140,7 +130,7 @@ $(document).ready(function() {
     }
 
     function runAnsTimer(index) {
-        if (index < 5) {
+        if (index < myQuestions.length) {
             index++;
             setTimeout(function() {
                 showImage.empty();
@@ -152,12 +142,14 @@ $(document).ready(function() {
         }
     }
 
+    //start button function
     $('#start').on("click", function() {
         $('.remove').remove();
         $('#music').remove();
         buildQuiz(0);
     });
 
+    //Reset function
     restart.on("click", function() {
         location.reload();
     });

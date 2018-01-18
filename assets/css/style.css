@@ -137,7 +137,7 @@ input {
 #unAnswered,
 #gameOver {
     text-align: center;
-    color: darkred;
+    color: greenyellow;
     font-size: 30px;
     font-family: fantasy;
 }
