@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var quizContainer = $('#quiz');
     var resultsContainer = $('#result');
     var options = document.getElementById('answers');
@@ -6,7 +6,9 @@ $(document).ready(function() {
     var inputType = document.createElement('input');
     var inputDiv = $('#input');
     var timerDiv = $('#mytimer').hide();
+    var speechDiv = $('#speech');
     var showImage = $('#image');
+    var testDiv = $('#test').hide();
     var restart = $('#restart').hide();
     var ans = $('#correctAnswer').hide();
     var wrg = $('#wrongAnswer').hide();
@@ -21,7 +23,7 @@ $(document).ready(function() {
 
     //JSON data about questions and answers
     var myQuestions = [{
-            question: "Which Disney character sings the song 'Be Prepared'?",
+            question: "Which Disney character sings the song, 'Be Prepared'?",
             answer: ["The Princess and the Frog - Tiana", "Scar - Lion king ", "Frozen - Elsa", "Toy Story- Sheriff Woody"],
             correctAnswer: "Scar - Lion king ",
             image: "assets/images/lion.gif",
@@ -56,6 +58,7 @@ $(document).ready(function() {
     //building quiz for each questions 
     function buildQuiz(i) {
         if (i === 5) {
+            testDiv.hide()
             ansDiv.hide();
             quizContainer.hide();
             $('#gameOver').html("Awesome!! Game Over!!");
@@ -65,7 +68,10 @@ $(document).ready(function() {
             unAns.show().html("No. of UnAnswered: " + numOfUnanswered);
             restart.show();
         }
+
         $('#quiz').html(myQuestions[i].question);
+
+        // quizQuestion.id = "message";
 
         for (var j = 0; j < myQuestions[i].answer.length; j++) {
             inputType.className = ('select');
@@ -79,7 +85,7 @@ $(document).ready(function() {
         answer = myQuestions[i].correctAnswer;
         image = myQuestions[i].image;
 
-        $('.select').on("click", function() {
+        $('.select').on("click", function () {
             if (setCheck != this) {
                 setCheck = this;
             } else {
@@ -96,6 +102,7 @@ $(document).ready(function() {
             }
             $('#printTime').text("Time Remaining: " + remainingTime + " Seconds");
             showImage.html("<img src=" + myQuestions[i].image + " width='250px' height='250px'>");
+            testDiv.hide();
             stopTimer();
             runAnsTimer(i);
         });
@@ -103,6 +110,7 @@ $(document).ready(function() {
         //function to decrement the timer
         function decrementTimer() {
             remainingTime--;
+            testDiv.show();
             timerDiv.show().html("Your Timer - 00: " + remainingTime);
             if (remainingTime === 0) {
                 stopTimer();
@@ -112,13 +120,14 @@ $(document).ready(function() {
                 $('#printAnswer').text("The Correct Answer was: " + myQuestions[i].correctAnswer);
                 numOfUnanswered++;
                 runAnsTimer(i);
+                testDiv.hide();
             }
         }
 
         //function to set the interval for each sec
         function startTimer() {
             timer = setInterval(decrementTimer, 1000);
-            remainingTime = 31;
+            remainingTime = 61;
         }
     }
 
@@ -135,7 +144,7 @@ $(document).ready(function() {
     function runAnsTimer(index) {
         if (index < myQuestions.length) {
             index++;
-            setTimeout(function() {
+            setTimeout(function () {
                 showImage.empty();
                 resultsContainer.empty();
                 $('#printTime').empty();
@@ -146,14 +155,14 @@ $(document).ready(function() {
     }
 
     //start button function
-    $('#start').on("click", function() {
+    $('#start').on("click", function () {
         $('.remove').remove();
         $('#music').remove();
         buildQuiz(0);
     });
 
     //Reset function
-    restart.on("click", function() {
+    restart.on("click", function () {
         location.reload();
     });
 });
