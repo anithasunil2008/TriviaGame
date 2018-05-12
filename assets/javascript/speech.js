@@ -25,7 +25,7 @@ $(document).ready(function () {
 
                         $voicelist.append($option);
                     });
-                }
+                }h
             }
             var msg = new SpeechSynthesisUtterance();
             var voices = window.speechSynthesis.getVoices();
